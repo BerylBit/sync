@@ -1,0 +1,55 @@
+# Group Blocks
+
+## api/v0.2/blocks [/blocks{?from,limit,direction}]
+
++ Parameters
+    + from (required, "latest" | number, `latest`) ... The number of the block from which to show or `latest`
+    + limit (required, number, `2`) ... The limit of transactions to be shown
+    + direction (required, "newer" | "older", `older`) ... Newer or older than the ID of the `from`
+
+### Get blocks range [GET]
+Get blocks range
+
++ Response 200 (application/json)
+    + Attributes
+        + request (Request, required)
+        + status: success (string, required)
+        + result (object, required{{isResultNullable}})
+            + pagination (PaginationFromNumber, required)
+            + list (array[Block], required)
+        + error (Error, required, nullable)
+
+## api/v0.2/blocks/:block_number [/blocks/{blockNumber}]
+
++ Parameters
+    + `blockNumber`: `lastCommitted` (required, BlockNumber) - An integer block number, `lastCommitted` or `lastFinalized`
+
+### Get block details [GET]
+Get block details
+
++ Response 200 (application/json)
+    + Attributes
+        + request (Request, required)
+        + status: success (string, required)
+        + result (Block, required{{isResultNullable}})
+        + error (Error, required, nullable)
+
+## api/v0.2/blocks/blockNumber/transactions [/blocks/{blockNumber}/transactions{?from,limit,direction}]
+
++ Parameters
+    + `blockNumber`: `lastCommitted` (required, BlockNumber) - An integer block number, `lastCommitted` or `lastFinalized`
+    + from (required, "latest" | string, `latest`) ... The hash of the transaction from which to show or `latest`
+    + limit (required, number, `2`) ... The limit of transactions to be shown
+    + direction (required, "newer" | "older", `older`) ... Newer or older than the ID of the `from`
+
+### Get block transactions [GET]
+Get block transactions
+
++ Response 200 (application/json)
+    + Attributes
+        + request (Request, required)
+        + status: success (string, required)
+        + result (object, required{{isResultNullable}})
+            + pagination (PaginationFromHash, required)
+            + list (array[Transaction.InBlock], required)
+        + error (Error, required, nullable)
